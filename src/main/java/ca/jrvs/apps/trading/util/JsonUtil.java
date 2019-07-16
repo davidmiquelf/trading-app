@@ -9,8 +9,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 
 public class JsonUtil {
 
@@ -66,7 +64,7 @@ public class JsonUtil {
     JsonNode rootNode = mapper.readTree(json);
     List<JsonNode> nodes = rootNode.findValues(fieldName);
     List<T> l = new ArrayList<>();
-    for (JsonNode node : nodes){
+    for (JsonNode node : nodes) {
       l.add((T) mapper.readValue(node.toString(), clazz));
     }
     return l;

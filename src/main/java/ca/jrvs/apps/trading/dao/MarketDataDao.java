@@ -3,7 +3,6 @@ package ca.jrvs.apps.trading.dao;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class MarketDataDao {
     String json = executeHttpGet(url);
     List<IexQuote> quotes = null;
     try {
-       quotes = JsonUtil.toObjectsFromJsonByField(json, "quote", IexQuote.class);
+      quotes = JsonUtil.toObjectsFromJsonByField(json, "quote", IexQuote.class);
     } catch (IOException e) {
       e.printStackTrace();
     }
