@@ -12,8 +12,11 @@ import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MarketDataDao {
 
   private HttpClientConnectionManager hccm;
@@ -24,6 +27,7 @@ public class MarketDataDao {
       + "?token=pk_f0966987a4e34207821ed24dbfdf9bb2";
 
 
+  @Autowired
   public MarketDataDao(HttpClientConnectionManager httpClientConnectionManager) {
     this.hccm = httpClientConnectionManager;
   }
