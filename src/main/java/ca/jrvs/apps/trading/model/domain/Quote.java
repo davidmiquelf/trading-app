@@ -1,69 +1,121 @@
 package ca.jrvs.apps.trading.model.domain;
 
-@SuppressWarnings("unused")
-public class Quote implements Entity<String>, java.io.Serializable {
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.HashMap;
+import java.util.Map;
 
-  private double askPrice;
-  private int askSize;
-  private double bidPrice;
-  private int bidSize;
-  private String id;
-  private double lastPrice;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "ticker",
+    "lastPrice",
+    "bidPrice",
+    "bidSize",
+    "askPrice",
+    "askSize",
+    "id"
+})
+public class Quote implements Entity<String> {
+
+  @JsonProperty("ticker")
   private String ticker;
+  @JsonProperty("lastPrice")
+  private Double lastPrice;
+  @JsonProperty("bidPrice")
+  private Double bidPrice;
+  @JsonProperty("bidSize")
+  private Long bidSize;
+  @JsonProperty("askPrice")
+  private Double askPrice;
+  @JsonProperty("askSize")
+  private Long askSize;
+  @JsonProperty("id")
+  private String id;
+  @JsonIgnore
+  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String s) {
-    this.id = s;
-  }
-
-  public double getAskPrice() {
-    return askPrice;
-  }
-
-  public void setAskPrice(double askPrice) {
-    this.askPrice = askPrice;
-  }
-
-  public int getAskSize() {
-    return askSize;
-  }
-
-  public void setAskSize(int askSize) {
-    this.askSize = askSize;
-  }
-
-  public double getBidPrice() {
-    return bidPrice;
-  }
-
-  public void setBidPrice(double bidPrice) {
-    this.bidPrice = bidPrice;
-  }
-
-  public int getBidSize() {
-    return bidSize;
-  }
-
-  public void setBidSize(int bidSize) {
-    this.bidSize = bidSize;
-  }
-
-  public double getLastPrice() {
-    return lastPrice;
-  }
-
-  public void setLastPrice(double lastPrice) {
-    this.lastPrice = lastPrice;
-  }
-
+  @JsonProperty("ticker")
   public String getTicker() {
     return ticker;
   }
 
+  @JsonProperty("ticker")
   public void setTicker(String ticker) {
     this.ticker = ticker;
   }
+
+  @JsonProperty("lastPrice")
+  public Double getLastPrice() {
+    return lastPrice;
+  }
+
+  @JsonProperty("lastPrice")
+  public void setLastPrice(Double lastPrice) {
+    this.lastPrice = lastPrice;
+  }
+
+  @JsonProperty("bidPrice")
+  public Double getBidPrice() {
+    return bidPrice;
+  }
+
+  @JsonProperty("bidPrice")
+  public void setBidPrice(Double bidPrice) {
+    this.bidPrice = bidPrice;
+  }
+
+  @JsonProperty("bidSize")
+  public Long getBidSize() {
+    return bidSize;
+  }
+
+  @JsonProperty("bidSize")
+  public void setBidSize(Long bidSize) {
+    this.bidSize = bidSize;
+  }
+
+  @JsonProperty("askPrice")
+  public Double getAskPrice() {
+    return askPrice;
+  }
+
+  @JsonProperty("askPrice")
+  public void setAskPrice(Double askPrice) {
+    this.askPrice = askPrice;
+  }
+
+  @JsonProperty("askSize")
+  public Long getAskSize() {
+    return askSize;
+  }
+
+  @JsonProperty("askSize")
+  public void setAskSize(Long askSize) {
+    this.askSize = askSize;
+  }
+
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  @JsonProperty("id")
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  @JsonAnyGetter
+  public Map<String, Object> getAdditionalProperties() {
+    return this.additionalProperties;
+  }
+
+  @JsonAnySetter
+  public void setAdditionalProperty(String name, Object value) {
+    this.additionalProperties.put(name, value);
+  }
+
 }

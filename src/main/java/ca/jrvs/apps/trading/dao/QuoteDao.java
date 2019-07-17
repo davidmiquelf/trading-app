@@ -22,8 +22,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
     jdbcTemplate = new JdbcTemplate(dataSource);
     simpleJdbcInsert =
         new SimpleJdbcInsert(dataSource)
-            .withTableName(TABLE_NAME)
-            .usingGeneratedKeyColumns(ID_NAME);
+            .withTableName(TABLE_NAME);
   }
 
   @Override
@@ -35,18 +34,22 @@ public class QuoteDao implements CrudRepository<Quote, String> {
 
   @Override
   public Quote findById(String id) {
-    String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+    String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
     return this.jdbcTemplate.queryForObject(sql, Quote.class, id);
   }
 
   @Override
   public boolean existsById(String id) {
-    return findById(id) != null;
+    String sql = "SELECT count(*) FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
+    boolean exists = false;
+    Integer count = this.jdbcTemplate.queryForObject(sql, Integer.class, id);
+    exists = count != null && count > 0;
+    return exists;
   }
 
   @Override
   public void deleteById(String id) {
-    String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+    String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
     this.jdbcTemplate.update(sql);
   }
 }
