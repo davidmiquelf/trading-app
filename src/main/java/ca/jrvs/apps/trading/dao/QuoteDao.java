@@ -16,7 +16,6 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   private final static String ID_NAME = "ticker";
   private JdbcTemplate jdbcTemplate;
   private SimpleJdbcInsert simpleJdbcInsert;
-  private DataSource dataSource;
 
   @Autowired
   public QuoteDao(DataSource dataSource) {
