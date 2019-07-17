@@ -1,5 +1,6 @@
 package ca.jrvs.apps.trading.dao;
 
+import ca.jrvs.apps.trading.model.domain.QueryRowMapper;
 import ca.jrvs.apps.trading.model.domain.Quote;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   @Override
   public Quote findById(String id) {
     String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
-    return this.jdbcTemplate.queryForObject(sql, Quote.class, id);
+    Quote quote = (Quote) this.jdbcTemplate.queryForObject(
+        sql, new Object[]{id}, new QueryRowMapper());
+    return quote;
   }
 
   @Override
