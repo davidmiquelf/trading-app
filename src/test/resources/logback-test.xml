@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <logger level="off" name="org.apache.http.client.protocol"/>
+  <logger level="off" name="org.springframework.core "/>
+  <logger level="off" name="org.springframework.beans"/>
+  <logger level="off" name="org.springframework.context"/>
+  <logger level="off" name="org.springframework.transaction"/>
+  <logger level="off" name="org.springframework.web"/>
+  <logger level="off" name="org.springframework.test"/>
+  <logger level="off" name="org.hibernate"/>
+</configuration>
