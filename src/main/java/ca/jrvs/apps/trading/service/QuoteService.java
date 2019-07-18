@@ -26,13 +26,13 @@ public class QuoteService {
     Quote quote = new Quote();
     quote.setId(iexQuote.getSymbol());
     quote.setTicker(iexQuote.getSymbol());
-    quote.setBidPrice(iexQuote.getIexBidPrice());
-    quote.setAskPrice(iexQuote.getIexAskPrice());
-    quote.setBidSize(iexQuote.getIexBidSize());
-    quote.setAskSize((iexQuote.getIexAskSize()));
     Double latestPrice = iexQuote.getLatestPrice();
     if (latestPrice != null) {
       quote.setLastPrice(latestPrice);
+      quote.setBidPrice(iexQuote.getIexBidPrice());
+      quote.setAskPrice(iexQuote.getIexAskPrice());
+      quote.setBidSize(iexQuote.getIexBidSize());
+      quote.setAskSize((iexQuote.getIexAskSize()));
     }
     return quote;
   }
