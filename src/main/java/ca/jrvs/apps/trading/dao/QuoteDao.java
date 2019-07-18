@@ -1,9 +1,10 @@
 package ca.jrvs.apps.trading.dao;
 
-import ca.jrvs.apps.trading.model.domain.QueryRowMapper;
 import ca.jrvs.apps.trading.model.domain.Quote;
+import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -36,8 +37,8 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   @Override
   public Quote findById(String id) {
     String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
-    Quote quote = (Quote) this.jdbcTemplate.queryForObject(
-        sql, new Object[]{id}, new QueryRowMapper());
+    Quote quote = this.jdbcTemplate.queryForObject(
+        sql, BeanPropertyRowMapper.newInstance(Quote.class), id);
     return quote;
   }
 
@@ -53,6 +54,13 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   @Override
   public void deleteById(String id) {
     String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
-    this.jdbcTemplate.update(sql);
+    this.jdbcTemplate.update(sql, id);
+  }
+
+  public List<Quote> getAll() {
+    List<Quote> quotes = this.jdbcTemplate.query(
+        "select * from quote",
+        BeanPropertyRowMapper.newInstance(Quote.class));
+    return quotes;
   }
 }

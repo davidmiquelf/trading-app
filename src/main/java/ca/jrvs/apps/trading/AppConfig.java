@@ -25,7 +25,7 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
       DataSource dataSource = new SimpleDriverDataSource();
-      return dataSource();
+      return dataSource;
     }
 
   //http://bit.ly/2tWTmzQ connectionPool

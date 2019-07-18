@@ -3,9 +3,9 @@ package ca.jrvs.apps.trading.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
 import ca.jrvs.apps.trading.model.domain.Quote;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,6 @@ public class QuoteDaoTest {
   private QuoteDao quoteDao;
 
   @Test
-  @Sql(
-      statements = "TRUNCATE quote CASCADE",
-      executionPhase = AFTER_TEST_METHOD
-  )
   public void saveAndExistsById() {
     Quote quote = new Quote();
     quote.setTicker("AACL");
@@ -52,6 +48,17 @@ public class QuoteDaoTest {
   }
 
   @Test
+  @Sql(scripts = "/quote.sql")
+  public void getAll() {
+    List<Quote> quotes = quoteDao.getAll();
+    assertEquals(3, quotes.size());
+  }
+
+  @Test
+  @Sql(scripts = "/quote.sql")
   public void deleteById() {
+    quoteDao.deleteById("A");
+
+    assertFalse(quoteDao.existsById("A"));
   }
 }
