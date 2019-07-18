@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import ca.jrvs.apps.trading.model.domain.Quote;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +59,25 @@ public class QuoteDaoTest {
   @Sql(scripts = "/quote.sql")
   public void deleteById() {
     quoteDao.deleteById("A");
-
+    quoteDao.deleteById("B");
+    quoteDao.deleteById("C");
     assertFalse(quoteDao.existsById("A"));
+    assertFalse(quoteDao.existsById("B"));
+    assertFalse(quoteDao.existsById("C"));
+  }
+
+  @Test
+  public void saveAll() {
+    String[] tickers = {"A", "B", "C"};
+    List<Quote> quotes = new ArrayList<>();
+    for (String ticker : tickers) {
+      Quote quote = new Quote();
+      quote.setTicker(ticker);
+      quotes.add(quote);
+    }
+    quoteDao.saveAll(quotes);
+    assertTrue(quoteDao.existsById("A"));
+    assertTrue(quoteDao.existsById("B"));
+    assertTrue(quoteDao.existsById("C"));
   }
 }

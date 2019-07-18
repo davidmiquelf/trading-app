@@ -63,4 +63,13 @@ public class QuoteDao implements CrudRepository<Quote, String> {
         BeanPropertyRowMapper.newInstance(Quote.class));
     return quotes;
   }
+
+  public void saveAll(List<Quote> quotes) {
+    SqlParameterSource[] params = quotes
+        .stream()
+        .map(BeanPropertySqlParameterSource::new)
+        .toArray(SqlParameterSource[]::new);
+
+    this.simpleJdbcInsert.executeBatch(params);
+  }
 }

@@ -117,7 +117,7 @@ public class IexQuote {
   @JsonProperty("iexBidSize")
   private Long iexBidSize;
   @JsonProperty("iexAskPrice")
-  private Long iexAskPrice;
+  private Double iexAskPrice;
   @JsonProperty("iexAskSize")
   private Long iexAskSize;
   @JsonProperty("marketCap")
@@ -446,12 +446,12 @@ public class IexQuote {
   }
 
   @JsonProperty("iexAskPrice")
-  public Long getIexAskPrice() {
+  public Double getIexAskPrice() {
     return iexAskPrice;
   }
 
   @JsonProperty("iexAskPrice")
-  public void setIexAskPrice(Long iexAskPrice) {
+  public void setIexAskPrice(Double iexAskPrice) {
     this.iexAskPrice = iexAskPrice;
   }
 
