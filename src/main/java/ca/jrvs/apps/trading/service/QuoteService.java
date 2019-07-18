@@ -40,7 +40,7 @@ public class QuoteService {
   public void initQuotes(List<String> tickers) {
     for (String ticker : tickers) {
       Quote quote = new Quote();
-      quote.setTicker("ticker");
+      quote.setTicker(ticker);
       System.out.println("Trying to insert " + ticker + " to quotes.");
       try {
         quoteDao.save(quote);
@@ -53,7 +53,7 @@ public class QuoteService {
 
   public void initQuote(String ticker) {
     Quote quote = new Quote();
-    quote.setTicker("ticker");
+    quote.setTicker(ticker);
     System.out.println("Trying to insert " + ticker + " to quotes.");
     try {
       quoteDao.save(quote);
@@ -71,6 +71,6 @@ public class QuoteService {
     quotes = iexQuotes.stream()
         .map(QuoteService::buildQuoteFromIexQuote)
         .collect(Collectors.toList());
-    quoteDao.saveAll(quotes);
+    quoteDao.updateAll(quotes);
   }
 }

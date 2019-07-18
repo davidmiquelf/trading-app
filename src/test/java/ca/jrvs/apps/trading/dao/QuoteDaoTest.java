@@ -57,6 +57,24 @@ public class QuoteDaoTest {
 
   @Test
   @Sql(scripts = "/quote.sql")
+  public void updateAll() {
+    String[] tickers = {"A", "B", "C", "D"};
+    List<Quote> quotes = new ArrayList<>();
+    for (String ticker : tickers) {
+      Quote quote = new Quote();
+      quote.setTicker(ticker);
+      quote.setAskSize((long) 123);
+      quotes.add(quote);
+    }
+    quoteDao.updateAll(quotes);
+    assertEquals((long) 123, (long) quoteDao.findById("A").getAskSize());
+    assertEquals((long) 123, (long) quoteDao.findById("B").getAskSize());
+    assertEquals((long) 123, (long) quoteDao.findById("C").getAskSize());
+
+  }
+
+  @Test
+  @Sql(scripts = "/quote.sql")
   public void deleteById() {
     quoteDao.deleteById("A");
     quoteDao.deleteById("B");
@@ -66,18 +84,5 @@ public class QuoteDaoTest {
     assertFalse(quoteDao.existsById("C"));
   }
 
-  @Test
-  public void saveAll() {
-    String[] tickers = {"A", "B", "C"};
-    List<Quote> quotes = new ArrayList<>();
-    for (String ticker : tickers) {
-      Quote quote = new Quote();
-      quote.setTicker(ticker);
-      quotes.add(quote);
-    }
-    quoteDao.saveAll(quotes);
-    assertTrue(quoteDao.existsById("A"));
-    assertTrue(quoteDao.existsById("B"));
-    assertTrue(quoteDao.existsById("C"));
-  }
+
 }

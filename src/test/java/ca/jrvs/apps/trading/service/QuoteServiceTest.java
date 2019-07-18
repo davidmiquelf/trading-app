@@ -1,5 +1,7 @@
 package ca.jrvs.apps.trading.service;
 
+import static org.junit.Assert.assertTrue;
+
 import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
 import java.util.Arrays;
@@ -26,7 +28,16 @@ public class QuoteServiceTest {
     QuoteService service = new QuoteService(quoteDao, marketDataDao);
     String[] tickers = {"FB", "AAPL", "NFLX", "ATVI"};
     List<String> tickerList = Arrays.asList(tickers);
+
     service.initQuotes(tickerList);
+    assertTrue(quoteDao.existsById("FB"));
+    assertTrue(quoteDao.existsById("AAPL"));
+    assertTrue(quoteDao.existsById("NFLX"));
+    assertTrue(quoteDao.existsById("ATVI"));
+
     service.updateMarketData();
+    if (marketDataDao.findIexQuoteByTicker("FB").getLatestPrice() != null) {
+      assertTrue(quoteDao.findById("FB").getLastPrice() > 0);
+    }
   }
 }
