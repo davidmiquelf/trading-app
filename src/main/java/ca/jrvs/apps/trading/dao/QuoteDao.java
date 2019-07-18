@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.domain.Quote;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -30,7 +31,11 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   @Override
   public Quote save(Quote quote) {
     SqlParameterSource params = new BeanPropertySqlParameterSource(quote);
-    this.simpleJdbcInsert.execute(params);
+    try {
+      this.simpleJdbcInsert.execute(params);
+    } catch (DuplicateKeyException e) {
+      System.out.println(quote.getTicker() + " is already in the database.");
+    }
     return quote;
   }
 
@@ -65,11 +70,17 @@ public class QuoteDao implements CrudRepository<Quote, String> {
   }
 
   public void saveAll(List<Quote> quotes) {
-    SqlParameterSource[] params = quotes
-        .stream()
+    SqlParameterSource[] params = quotes.stream()
         .map(BeanPropertySqlParameterSource::new)
         .toArray(SqlParameterSource[]::new);
 
-    this.simpleJdbcInsert.executeBatch(params);
+    try {
+      this.simpleJdbcInsert.executeBatch(params);
+    } catch (DuplicateKeyException e) {
+      quotes.stream()
+          .map(Quote::getTicker)
+          .forEach(t -> System.out.println(t + " is already in the database."));
+    }
+
   }
 }
