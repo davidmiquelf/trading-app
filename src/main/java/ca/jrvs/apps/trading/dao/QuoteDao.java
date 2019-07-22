@@ -11,6 +11,5 @@ public class QuoteDao extends JdbcCrudDao<Quote, String> {
   @Autowired
   public QuoteDao(DataSource dataSource) {
     super(dataSource, Quote.class, "quote", "ticker");
-
   }
 }

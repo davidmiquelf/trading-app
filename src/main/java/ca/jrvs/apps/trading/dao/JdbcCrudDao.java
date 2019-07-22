@@ -4,7 +4,10 @@ import ca.jrvs.apps.trading.model.domain.Entity;
 import ca.jrvs.apps.trading.util.SqlUtil;
 import java.util.List;
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -14,12 +17,14 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepository<E, ID> {
 
+  private static final Logger logger = LoggerFactory.getLogger(JdbcCrudDao.class);
+  private Class<E> eClass;
+
   protected final String TABLE_NAME;
   protected final String ID_NAME;
   protected JdbcTemplate jdbcTemplate;
   protected SimpleJdbcInsert simpleJdbcInsert;
   protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-  private Class<E> eClass;
 
   public JdbcCrudDao(DataSource dataSource, Class<E> clazz, String tableName, String idName) {
     this.eClass = clazz;
@@ -30,7 +35,6 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     simpleJdbcInsert =
         new SimpleJdbcInsert(dataSource)
             .withTableName(TABLE_NAME);
-
   }
 
   @Override
@@ -39,22 +43,33 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     try {
       this.simpleJdbcInsert.execute(params);
     } catch (DuplicateKeyException e) {
-      System.out.println(entity.getId() + " is already in " + TABLE_NAME);
+      logger.debug(entity.getId() + " is already in " + TABLE_NAME);
     }
     return entity;
   }
 
   @Override
-  public E findById(ID id) {
+  public E findById(ID id) throws ResourceNotFoundException {
     String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
-    E entity = this.jdbcTemplate.queryForObject(
-        sql, BeanPropertyRowMapper.newInstance(this.eClass), id);
+    logger.info(sql);
+    E entity = null;
+    try {
+      entity = this.jdbcTemplate.queryForObject(
+          sql, BeanPropertyRowMapper.newInstance(this.eClass), id);
+    } catch (EmptyResultDataAccessException e) {
+      logger.debug("Can't find trader id:" + id, e);
+    }
+    if (entity == null) {
+      throw new ResourceNotFoundException("Resource not found.");
+    }
+
     return entity;
   }
 
   @Override
   public boolean existsById(ID id) {
     String sql = "SELECT count(*) FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
+    logger.info(sql);
     boolean exists = false;
     Integer count = this.jdbcTemplate.queryForObject(sql, Integer.class, id);
     exists = count != null && count > 0;
@@ -64,12 +79,14 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
   @Override
   public void deleteById(ID id) {
     String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
+    logger.info(sql);
     this.jdbcTemplate.update(sql, id);
   }
 
   public List<E> getAll() {
-    List<E> entities = this.jdbcTemplate.query(
-        "select * from " + TABLE_NAME,
+    String sql = "select * from " + TABLE_NAME;
+    logger.info(sql);
+    List<E> entities = this.jdbcTemplate.query(sql,
         BeanPropertyRowMapper.newInstance(this.eClass));
     return entities;
   }
@@ -78,8 +95,9 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     if (entities.isEmpty()) {
       return;
     }
-    E pojo = entities.get(0);
-    String sql = SqlUtil.sqlUpdateString(pojo, this.TABLE_NAME, this.ID_NAME);
+    E entity = entities.get(0);
+    String sql = SqlUtil.sqlUpdateString(entity, this.TABLE_NAME, this.ID_NAME);
+    logger.info(sql);
     SqlParameterSource[] params = entities.stream()
         .map(BeanPropertySqlParameterSource::new)
         .toArray(SqlParameterSource[]::new);

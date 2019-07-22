@@ -10,6 +10,4 @@ public class AccountDao extends JdbcCrudDao<Account, Long> {
   public AccountDao(DataSource dataSource) {
     super(dataSource, Account.class, "trader", "id");
   }
-
-
 }

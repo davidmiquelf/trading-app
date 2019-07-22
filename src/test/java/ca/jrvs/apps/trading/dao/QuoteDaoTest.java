@@ -42,7 +42,7 @@ public class QuoteDaoTest {
 
   @Test
   @Sql(scripts = "/quote.sql")
-  public void findById() {
+  public void findById() throws ResourceNotFoundException {
     Quote quote = quoteDao.findById("A");
     assertEquals((Double) 1.1, quote.getAskPrice());
 
@@ -57,7 +57,7 @@ public class QuoteDaoTest {
 
   @Test
   @Sql(scripts = "/quote.sql")
-  public void updateAll() {
+  public void updateAll() throws ResourceNotFoundException {
     String[] tickers = {"A", "B", "C", "D"};
     List<Quote> quotes = new ArrayList<>();
     for (String ticker : tickers) {

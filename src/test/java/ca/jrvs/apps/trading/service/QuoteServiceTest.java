@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
+import ca.jrvs.apps.trading.dao.ResourceNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class QuoteServiceTest {
 
   @Test
   @Sql(statements = "Truncate quote cascade")
-  public void integrationTest() {
+  public void integrationTest() throws ResourceNotFoundException {
     QuoteService service = new QuoteService(quoteDao, marketDataDao);
     String[] tickers = {"FB", "AAPL", "NFLX", "ATVI"};
     List<String> tickerList = Arrays.asList(tickers);
