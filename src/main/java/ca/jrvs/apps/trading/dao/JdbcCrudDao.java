@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.domain.Entity;
+import ca.jrvs.apps.trading.util.SqlUtil;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.dao.DuplicateKeyException;
@@ -73,7 +74,12 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     return entities;
   }
 
-  public void updateAll(List<E> entities, String sql) {
+  public void updateAll(List<E> entities) {
+    if (entities.isEmpty()) {
+      return;
+    }
+    E pojo = entities.get(0);
+    String sql = SqlUtil.sqlUpdateString(pojo, this.TABLE_NAME, this.ID_NAME);
     SqlParameterSource[] params = entities.stream()
         .map(BeanPropertySqlParameterSource::new)
         .toArray(SqlParameterSource[]::new);

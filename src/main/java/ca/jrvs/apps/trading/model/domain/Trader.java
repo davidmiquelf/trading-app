@@ -7,8 +7,8 @@ public class Trader implements Entity<Long> {
   private Long id;
   private String firstName;
   private String lastName;
-  private LocalDate dateOfBirth;
-  private String Country;
+  private LocalDate dob;
+  private String country;
   private String email;
 
   @Override
@@ -20,6 +20,7 @@ public class Trader implements Entity<Long> {
   public void setId(Long id) {
     this.id = id;
   }
+
 
   public String getFirstName() {
     return firstName;
@@ -37,20 +38,20 @@ public class Trader implements Entity<Long> {
     this.lastName = lastName;
   }
 
-  public LocalDate getDateOfBirth() {
-    return dateOfBirth;
+  public LocalDate getDob() {
+    return dob;
   }
 
-  public void setDateOfBirth(LocalDate dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
+  public void setDob(LocalDate dob) {
+    this.dob = dob;
   }
 
   public String getCountry() {
-    return Country;
+    return country;
   }
 
   public void setCountry(String country) {
-    Country = country;
+    this.country = country;
   }
 
   public String getEmail() {

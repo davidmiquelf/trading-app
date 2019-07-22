@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
@@ -24,6 +25,7 @@ public class QuoteServiceTest {
   private MarketDataDao marketDataDao;
 
   @Test
+  @Sql(statements = "Truncate quote cascade")
   public void integrationTest() {
     QuoteService service = new QuoteService(quoteDao, marketDataDao);
     String[] tickers = {"FB", "AAPL", "NFLX", "ATVI"};
