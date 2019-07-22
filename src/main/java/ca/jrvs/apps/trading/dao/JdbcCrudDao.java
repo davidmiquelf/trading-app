@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-public class JdbcCrudDao<E extends Entity> implements CrudRepository<E, String> {
+public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepository<E, ID> {
 
   protected final String TABLE_NAME;
   protected final String ID_NAME;
@@ -44,7 +44,7 @@ public class JdbcCrudDao<E extends Entity> implements CrudRepository<E, String> 
   }
 
   @Override
-  public E findById(String id) {
+  public E findById(ID id) {
     String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
     E entity = this.jdbcTemplate.queryForObject(
         sql, BeanPropertyRowMapper.newInstance(this.eClass), id);
@@ -52,7 +52,7 @@ public class JdbcCrudDao<E extends Entity> implements CrudRepository<E, String> 
   }
 
   @Override
-  public boolean existsById(String id) {
+  public boolean existsById(ID id) {
     String sql = "SELECT count(*) FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
     boolean exists = false;
     Integer count = this.jdbcTemplate.queryForObject(sql, Integer.class, id);
@@ -61,7 +61,7 @@ public class JdbcCrudDao<E extends Entity> implements CrudRepository<E, String> 
   }
 
   @Override
-  public void deleteById(String id) {
+  public void deleteById(ID id) {
     String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_NAME + " = ?";
     this.jdbcTemplate.update(sql, id);
   }

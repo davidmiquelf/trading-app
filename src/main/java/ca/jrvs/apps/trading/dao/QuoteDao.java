@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class QuoteDao extends JdbcCrudDao<Quote> {
+public class QuoteDao extends JdbcCrudDao<Quote, String> {
 
   @Autowired
   public QuoteDao(DataSource dataSource) {
@@ -15,7 +15,7 @@ public class QuoteDao extends JdbcCrudDao<Quote> {
 
   }
 
-  public void update(List<Quote> quotes) {
+  public void updateAll(List<Quote> quotes) {
     String sql =
         "Update quote Set "
             + "last_price = :lastPrice, "

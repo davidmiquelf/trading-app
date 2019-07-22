@@ -1,8 +1,9 @@
 package ca.jrvs.apps.trading.model.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;
+import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -16,7 +17,10 @@ public class MarketDataDaoIntTest {
   @BeforeClass
   public static void setup(){
     HttpClientConnectionManager hccm = new BasicHttpClientConnectionManager();
-    dao = new MarketDataDao(hccm);
+    MarketDataConfig marketDataConfig = new MarketDataConfig();
+    marketDataConfig.setHost("https://cloud.iexapis.com/");
+    marketDataConfig.setToken("pk_f0966987a4e34207821ed24dbfdf9bb2");
+    dao = new MarketDataDao(hccm, marketDataConfig);
   }
   @Test
   public void findIexQuoteByTickers() {

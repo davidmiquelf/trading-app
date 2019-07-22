@@ -6,13 +6,19 @@ import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.model.domain.Quote;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
 
+@Transactional
+@Service
 public class QuoteService {
 
   private QuoteDao quoteDao;
   private MarketDataDao marketDataDao;
 
+  @Autowired
   public QuoteService(QuoteDao quoteDao, MarketDataDao marketDataDao) {
     this.quoteDao = quoteDao;
     this.marketDataDao = marketDataDao;
@@ -71,6 +77,6 @@ public class QuoteService {
     quotes = iexQuotes.stream()
         .map(QuoteService::buildQuoteFromIexQuote)
         .collect(Collectors.toList());
-    quoteDao.update(quotes);
+    quoteDao.updateAll(quotes);
   }
 }

@@ -5,7 +5,6 @@ import ca.jrvs.apps.trading.dao.QuoteDao;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.model.domain.Quote;
 import ca.jrvs.apps.trading.service.QuoteService;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class QuoteController {
   @ResponseStatus(HttpStatus.OK)
   public void putQuote(@RequestBody Quote quote) {
     try {
-      quoteDao.update(Collections.singletonList(quote));
+      quoteDao.save(quote);
     } catch (Exception e) {
       throw ResponseExceptionUtil.getResponseStatusException(e);
     }
@@ -77,10 +76,21 @@ public class QuoteController {
     }
   }
 
+  @GetMapping(path = "/ticker/{ticker}")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public Quote getQuote(@PathVariable String ticker) {
+    try {
+      return quoteDao.findById(ticker);
+    } catch (Exception e) {
+      throw ResponseExceptionUtil.getResponseStatusException(e);
+    }
+  }
+
   @GetMapping(path = "/iex/ticker/{ticker}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public IexQuote getQuote(@PathVariable String ticker) {
+  public IexQuote getIexQuote(@PathVariable String ticker) {
     try {
       return marketDataDao.findIexQuoteByTicker(ticker);
     } catch (Exception e) {

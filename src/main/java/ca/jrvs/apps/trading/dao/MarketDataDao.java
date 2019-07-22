@@ -1,5 +1,6 @@
 package ca.jrvs.apps.trading.dao;
 
+import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
@@ -20,21 +21,26 @@ import org.springframework.stereotype.Repository;
 public class MarketDataDao {
 
   private HttpClientConnectionManager hccm;
-  private final String BATCH_QUOTE_URL = "https://cloud.iexapis.com/stable/stock/market/batch"
-      + "?symbols=%s&types=quote"
-      + "&token=pk_f0966987a4e34207821ed24dbfdf9bb2";
-  private final String SINGLE_QUOTE_URL = "https://cloud.iexapis.com/stable/stock/%s/quote"
-      + "?token=pk_f0966987a4e34207821ed24dbfdf9bb2";
+  private final String HOST;
+  private final String BATCH_QUOTE_URL = "stable/stock/market/batch"
+      + "?symbols=%1$s&types=quote"
+      + "&token=%2$s";
+  private final String SINGLE_QUOTE_URL = "stable/stock/%1$s/quote"
+      + "?token=%2$s";
+  private final String TOKEN;
 
 
   @Autowired
-  public MarketDataDao(HttpClientConnectionManager httpClientConnectionManager) {
+  public MarketDataDao(
+      HttpClientConnectionManager httpClientConnectionManager, MarketDataConfig marketDataConfig) {
     this.hccm = httpClientConnectionManager;
+    this.HOST = marketDataConfig.getHost();
+    this.TOKEN = marketDataConfig.getToken();
   }
 
   public List<IexQuote> findIexQuoteByTickers(List<String> tickers) {
     String tickersString = tickers.stream().collect(Collectors.joining(","));
-    String url = String.format(BATCH_QUOTE_URL, tickersString);
+    String url = String.format(HOST + BATCH_QUOTE_URL, tickersString, TOKEN);
     String json = executeHttpGet(url);
     List<IexQuote> quotes = null;
     try {
@@ -46,7 +52,7 @@ public class MarketDataDao {
   }
 
   public IexQuote findIexQuoteByTicker(String ticker) {
-    String url = String.format(SINGLE_QUOTE_URL, ticker);
+    String url = String.format(HOST + SINGLE_QUOTE_URL, ticker, TOKEN);
     String json = executeHttpGet(url);
     IexQuote quote;
     try {

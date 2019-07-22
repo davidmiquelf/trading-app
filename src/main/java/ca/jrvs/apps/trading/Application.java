@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading;
 
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
@@ -10,10 +11,11 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
     JdbcTemplateAutoConfiguration.class,
     DataSourceAutoConfiguration.class,
     HibernateJpaAutoConfiguration.class})
-public class Application implements CommandLineRunner {
+public class Application {
 
-  @Override
-  public void run(String... args) {
-
+  public static void main(String... args) {
+    SpringApplication app = new SpringApplication(Application.class);
+    app.setWebApplicationType(WebApplicationType.SERVLET);
+    app.run(args);
   }
 }
