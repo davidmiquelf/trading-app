@@ -71,6 +71,6 @@ public class QuoteService {
     quotes = iexQuotes.stream()
         .map(QuoteService::buildQuoteFromIexQuote)
         .collect(Collectors.toList());
-    quoteDao.updateAll(quotes);
+    quoteDao.update(quotes);
   }
 }

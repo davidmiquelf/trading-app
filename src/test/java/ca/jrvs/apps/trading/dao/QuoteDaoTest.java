@@ -66,7 +66,7 @@ public class QuoteDaoTest {
       quote.setAskSize((long) 123);
       quotes.add(quote);
     }
-    quoteDao.updateAll(quotes);
+    quoteDao.update(quotes);
     assertEquals((long) 123, (long) quoteDao.findById("A").getAskSize());
     assertEquals((long) 123, (long) quoteDao.findById("B").getAskSize());
     assertEquals((long) 123, (long) quoteDao.findById("C").getAskSize());

@@ -18,10 +18,10 @@ public class AppConfig {
   private String iex_host;
 
   /*
-    @Bean
+      @Bean
     public MarketDataConfig marketDataConfig() {
     }
-*/
+  */
     @Bean
     public DataSource dataSource() {
       DataSource dataSource = new SimpleDriverDataSource();

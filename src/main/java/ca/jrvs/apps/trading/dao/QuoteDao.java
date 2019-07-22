@@ -15,7 +15,7 @@ public class QuoteDao extends JdbcCrudDao<Quote> {
 
   }
 
-  public void updateAll(List<Quote> quotes) {
+  public void update(List<Quote> quotes) {
     String sql =
         "Update quote Set "
             + "last_price = :lastPrice, "
