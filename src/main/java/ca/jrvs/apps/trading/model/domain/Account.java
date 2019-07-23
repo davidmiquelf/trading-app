@@ -5,17 +5,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({
     "amount",
-    "id",
-    "traderId"
+    "traderId",
+    "id"
 })
 public class Account implements Entity<Long> {
 
   @JsonProperty("amount")
   private Double amount;
-  @JsonProperty("id")
-  private Long id;
   @JsonProperty("traderId")
   private Long traderId;
+  @JsonProperty("id")
+  private Long id;
+
 
   @JsonProperty("amount")
   public Double getAmount() {

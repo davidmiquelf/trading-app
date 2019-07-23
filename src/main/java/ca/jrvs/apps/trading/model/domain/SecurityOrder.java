@@ -2,6 +2,8 @@ package ca.jrvs.apps.trading.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @JsonPropertyOrder({
     "id",
@@ -18,8 +20,9 @@ public class SecurityOrder implements Entity<Long> {
   private Long id;
   @JsonProperty("accountId")
   private Long accountId;
+  @Enumerated(EnumType.STRING)
   @JsonProperty("status")
-  private String status;
+  private StatusEnum status;
   @JsonProperty("ticker")
   private String ticker;
   @JsonProperty("size")
@@ -50,12 +53,12 @@ public class SecurityOrder implements Entity<Long> {
   }
 
   @JsonProperty("status")
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
   @JsonProperty("status")
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 
@@ -99,4 +102,7 @@ public class SecurityOrder implements Entity<Long> {
     this.notes = notes;
   }
 
+  public enum StatusEnum {
+    FILLED, CANCELED, PENDING
+  }
 }

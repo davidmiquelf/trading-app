@@ -18,7 +18,7 @@ public interface CrudRepository<E, ID> {
    * @param id must not be {@literal null}
    * @return the entity with the gievn id, or null if not found.
    */
-  E findById(ID id) throws ResourceNotFoundException;
+  E findById(ID id);
 
   /**
    * Returns whether an entity with the given id exists.
@@ -27,6 +27,13 @@ public interface CrudRepository<E, ID> {
    * @return {@literal true} if exists, {@literal false} otherwise.
    */
   boolean existsById(ID id);
+
+  /**
+   * Update an entity with the given entity.
+   *
+   * @param entity must not be {@literal null}
+   */
+  void update(E entity);
 
   /**
    * Delete the entity with the given id.

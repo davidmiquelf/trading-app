@@ -1,6 +1,6 @@
 package ca.jrvs.apps.trading.dao;
 
-public class ResourceNotFoundException extends Exception {
+public class ResourceNotFoundException extends RuntimeException {
 
   public ResourceNotFoundException(Exception e) {
     super(e.getMessage());

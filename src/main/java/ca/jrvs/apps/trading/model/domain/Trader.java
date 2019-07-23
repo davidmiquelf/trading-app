@@ -2,6 +2,7 @@ package ca.jrvs.apps.trading.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.time.LocalDate;
 
 @JsonPropertyOrder({
     "country",
@@ -16,7 +17,7 @@ public class Trader implements Entity<Long> {
   @JsonProperty("country")
   private String country;
   @JsonProperty("dob")
-  private String dob;
+  private LocalDate dob;
   @JsonProperty("email")
   private String email;
   @JsonProperty("firstName")
@@ -37,12 +38,12 @@ public class Trader implements Entity<Long> {
   }
 
   @JsonProperty("dob")
-  public String getDob() {
+  public LocalDate getDob() {
     return dob;
   }
 
   @JsonProperty("dob")
-  public void setDob(String dob) {
+  public void setDob(LocalDate dob) {
     this.dob = dob;
   }
 

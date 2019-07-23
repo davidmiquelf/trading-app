@@ -11,6 +11,7 @@ public class TraderDao extends JdbcCrudDao<Trader, Long> {
   @Autowired
   public TraderDao(DataSource dataSource) {
     super(dataSource, Trader.class, "trader", "id");
+    this.simpleJdbcInsert.usingGeneratedKeyColumns("id");
   }
 
 }

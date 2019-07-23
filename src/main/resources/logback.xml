@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <include resource="org/springframework/boot/logging/logback/base.xml"/>
-  <!-- API logging levels -->
   <logger level="error" name="org.apache.http.client.protocol"/>
   <logger level="error" name="org.springframework.core "/>
   <logger level="error" name="org.springframework.beans"/>
   <logger level="error" name="org.springframework.context"/>
   <logger level="error" name="org.springframework.transaction"/>
   <logger level="error" name="org.springframework.web"/>
-  <logger level="error" name="org.springframework.test"/>
+  <logger level="info" name="org.springframework.test"/>
   <logger level="error" name="org.hibernate"/>
-  <!-- Application logging levels -->
-  <logger level="debug" name="ca.jrvs.apps.trading.dao"/>
 </configuration>
