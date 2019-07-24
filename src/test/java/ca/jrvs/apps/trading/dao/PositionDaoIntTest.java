@@ -30,7 +30,7 @@ public class PositionDaoIntTest {
 
   @Test
   public void getByTickerAndAccountId() {
-    Position position = positionDao.getByTickerAndAccountId(Long.valueOf(1), "C");
+    Position position = positionDao.getByAccountIdAndTicker(Long.valueOf(1), "C");
     assertEquals(Long.valueOf(1), position.getPosition());
   }
 }

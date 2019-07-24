@@ -36,7 +36,7 @@ public class PositionDao {
     return positions;
   }
 
-  public Position getByTickerAndAccountId(Long accountId, String ticker) {
+  public Position getByAccountIdAndTicker(Long accountId, String ticker) {
     logger.debug("accountId= " + accountId.toString() + ", ticker = " + ticker);
     String sql = "SELECT * FROM position WHERE account_id = ? AND ticker = ?";
     Position position = null;

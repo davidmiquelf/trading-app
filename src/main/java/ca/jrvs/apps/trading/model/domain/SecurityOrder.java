@@ -30,17 +30,7 @@ public class SecurityOrder implements Entity<Long> {
   @JsonProperty("price")
   private Double price;
   @JsonProperty("notes")
-  private Object notes;
-
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
-  }
-
-  @JsonProperty("id")
-  public void setId(Long id) {
-    this.id = id;
-  }
+  private String notes;
 
   @JsonProperty("accountId")
   public Long getAccountId() {
@@ -52,34 +42,39 @@ public class SecurityOrder implements Entity<Long> {
     this.accountId = accountId;
   }
 
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
+  public SecurityOrder withAccountId(Long accountId) {
+    this.accountId = accountId;
+    return this;
   }
 
-  @JsonProperty("status")
-  public void setStatus(StatusEnum status) {
-    this.status = status;
+  @JsonProperty("id")
+  public Long getId() {
+    return id;
   }
 
-  @JsonProperty("ticker")
-  public String getTicker() {
-    return ticker;
+  @JsonProperty("id")
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  @JsonProperty("ticker")
-  public void setTicker(String ticker) {
-    this.ticker = ticker;
+  public SecurityOrder withId(Long id) {
+    this.id = id;
+    return this;
   }
 
-  @JsonProperty("size")
-  public Long getSize() {
-    return size;
+  @JsonProperty("notes")
+  public String getNotes() {
+    return notes;
   }
 
-  @JsonProperty("size")
-  public void setSize(Long size) {
-    this.size = size;
+  @JsonProperty("notes")
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
+
+  public SecurityOrder withNotes(String notes) {
+    this.notes = notes;
+    return this;
   }
 
   @JsonProperty("price")
@@ -92,16 +87,55 @@ public class SecurityOrder implements Entity<Long> {
     this.price = price;
   }
 
-  @JsonProperty("notes")
-  public Object getNotes() {
-    return notes;
+  public SecurityOrder withPrice(Double price) {
+    this.price = price;
+    return this;
   }
 
-  @JsonProperty("notes")
-  public void setNotes(Object notes) {
-    this.notes = notes;
+  @JsonProperty("size")
+  public Long getSize() {
+    return size;
   }
 
+  @JsonProperty("size")
+  public void setSize(Long size) {
+    this.size = size;
+  }
+
+  public SecurityOrder withSize(Long size) {
+    this.size = size;
+    return this;
+  }
+
+  @JsonProperty("status")
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+  @JsonProperty("status")
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+  public SecurityOrder withStatus(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
+  @JsonProperty("ticker")
+  public String getTicker() {
+    return ticker;
+  }
+
+  @JsonProperty("ticker")
+  public void setTicker(String ticker) {
+    this.ticker = ticker;
+  }
+
+  public SecurityOrder withTicker(String ticker) {
+    this.ticker = ticker;
+    return this;
+  }
   public enum StatusEnum {
     FILLED, CANCELED, PENDING
   }

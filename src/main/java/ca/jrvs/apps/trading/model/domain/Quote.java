@@ -1,31 +1,35 @@
 package ca.jrvs.apps.trading.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "ticker",
-    "lastPrice",
-    "bidPrice",
-    "bidSize",
-    "askPrice",
-    "askSize",
-    "id"
+        "ticker",
+        "lastPrice",
+        "bidPrice",
+        "bidSize",
+        "askPrice",
+        "askSize",
+        "id"
 })
-public class Quote implements Entity<String> {
+public class Quote {
 
   @JsonProperty("ticker")
   private String ticker;
   @JsonProperty("lastPrice")
-  private Double lastPrice = Double.valueOf(0);
+  private Double lastPrice;
   @JsonProperty("bidPrice")
-  private Double bidPrice = Double.valueOf(0);
+  private Double bidPrice;
   @JsonProperty("bidSize")
-  private Long bidSize = Long.valueOf(0);
+  private Long bidSize;
   @JsonProperty("askPrice")
-  private Double askPrice = Double.valueOf(0);
+  private Double askPrice;
   @JsonProperty("askSize")
-  private Long askSize = Long.valueOf(0);
+  private Long askSize;
+  @JsonProperty("id")
+  private String id;
 
   @JsonProperty("ticker")
   public String getTicker() {
@@ -35,6 +39,11 @@ public class Quote implements Entity<String> {
   @JsonProperty("ticker")
   public void setTicker(String ticker) {
     this.ticker = ticker;
+  }
+
+  public Quote withTicker(String ticker) {
+    this.ticker = ticker;
+    return this;
   }
 
   @JsonProperty("lastPrice")
@@ -47,6 +56,11 @@ public class Quote implements Entity<String> {
     this.lastPrice = lastPrice;
   }
 
+  public Quote withLastPrice(Double lastPrice) {
+    this.lastPrice = lastPrice;
+    return this;
+  }
+
   @JsonProperty("bidPrice")
   public Double getBidPrice() {
     return bidPrice;
@@ -55,6 +69,11 @@ public class Quote implements Entity<String> {
   @JsonProperty("bidPrice")
   public void setBidPrice(Double bidPrice) {
     this.bidPrice = bidPrice;
+  }
+
+  public Quote withBidPrice(Double bidPrice) {
+    this.bidPrice = bidPrice;
+    return this;
   }
 
   @JsonProperty("bidSize")
@@ -67,6 +86,11 @@ public class Quote implements Entity<String> {
     this.bidSize = bidSize;
   }
 
+  public Quote withBidSize(Long bidSize) {
+    this.bidSize = bidSize;
+    return this;
+  }
+
   @JsonProperty("askPrice")
   public Double getAskPrice() {
     return askPrice;
@@ -75,6 +99,11 @@ public class Quote implements Entity<String> {
   @JsonProperty("askPrice")
   public void setAskPrice(Double askPrice) {
     this.askPrice = askPrice;
+  }
+
+  public Quote withAskPrice(Double askPrice) {
+    this.askPrice = askPrice;
+    return this;
   }
 
   @JsonProperty("askSize")
@@ -87,15 +116,24 @@ public class Quote implements Entity<String> {
     this.askSize = askSize;
   }
 
+  public Quote withAskSize(Long askSize) {
+    this.askSize = askSize;
+    return this;
+  }
+
   @JsonProperty("id")
   public String getId() {
-    return ticker;
+    return id;
   }
 
   @JsonProperty("id")
   public void setId(String id) {
-    this.ticker = id;
+    this.id = id;
   }
 
+  public Quote withId(String id) {
+    this.id = id;
+    return this;
+  }
 
 }
