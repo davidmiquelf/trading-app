@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "askSize",
         "id"
 })
-public class Quote {
+public class Quote implements Entity<String>{
 
   @JsonProperty("ticker")
   private String ticker;
@@ -28,8 +28,6 @@ public class Quote {
   private Double askPrice;
   @JsonProperty("askSize")
   private Long askSize;
-  @JsonProperty("id")
-  private String id;
 
   @JsonProperty("ticker")
   public String getTicker() {
@@ -123,16 +121,16 @@ public class Quote {
 
   @JsonProperty("id")
   public String getId() {
-    return id;
+    return ticker;
   }
 
   @JsonProperty("id")
   public void setId(String id) {
-    this.id = id;
+    this.ticker = id;
   }
 
   public Quote withId(String id) {
-    this.id = id;
+    this.ticker = id;
     return this;
   }
 

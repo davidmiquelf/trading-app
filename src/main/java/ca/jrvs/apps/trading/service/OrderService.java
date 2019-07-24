@@ -73,30 +73,40 @@ public class OrderService {
         return securityOrderDao.save(securityOrder);
     }
 
-    private SecurityOrder executeBuyOrder(SecurityOrder securityOrder, MarketOrderDto orderDto) {
+    private void executeBuyOrder(SecurityOrder securityOrder, MarketOrderDto orderDto) {
         Account account = accountDao.findById(orderDto.getAccountId());
         Quote quote = quoteDao.findById(orderDto.getTicker());
         Double totalPrice = orderDto.getSize() * quote.getAskPrice();
 
         securityOrder.setStatus(StatusEnum.FILLED);
-        if (orderDto.getSize() > quote.getAskSize() || totalPrice > account.getAmount()) {
+        if (totalPrice > account.getAmount()) {
+            securityOrder.setNotes("Insufficient funds. Required buy-power:" + totalPrice);
+            securityOrder.setStatus(StatusEnum.CANCELED);
+        } else if (orderDto.getSize() > quote.getAskSize()){
+            securityOrder.setNotes("Order size too large.");
             securityOrder.setStatus(StatusEnum.CANCELED);
         }
         account.setAmount(account.getAmount() - totalPrice);
         accountDao.save(account);
-        return securityOrder;
     }
 
-    private SecurityOrder executeSellOrder(SecurityOrder securityOrder, MarketOrderDto orderDto) {
+    private void executeSellOrder(SecurityOrder securityOrder, MarketOrderDto orderDto) {
         Position position = positionDao.getByAccountIdAndTicker(orderDto.getAccountId(), orderDto.getTicker());
         Quote quote = quoteDao.findById(orderDto.getTicker());
+        Account account = accountDao.findById(orderDto.getAccountId());
+        Long absPosition = abs(position.getPosition());
+        Long absOrderSize = abs(orderDto.getSize());
+        Long absBidSize = abs(quote.getBidSize());
 
         securityOrder.setStatus(StatusEnum.FILLED);
-        Long resultPosition = abs(orderDto.getSize()) - abs(position.getPosition());
-        if (abs(orderDto.getSize()) > abs(quote.getBidSize()) || resultPosition < 0) {
-            securityOrder.setNotes("Insufficient fund.");
+        if (absPosition < absOrderSize) {
+            securityOrder.setNotes("Insufficient position");
+            securityOrder.setStatus(StatusEnum.CANCELED);
+        } else if (absBidSize < absOrderSize){
+            securityOrder.setNotes("Order size too large.");
             securityOrder.setStatus(StatusEnum.CANCELED);
         }
-        return securityOrder;
+        account.setAmount(account.getAmount() - absOrderSize * quote.getBidPrice());
+        accountDao.save(account);
     }
 }

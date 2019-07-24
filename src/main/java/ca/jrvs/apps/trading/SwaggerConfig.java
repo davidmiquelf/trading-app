@@ -36,7 +36,7 @@ public class SwaggerConfig {
         .apiInfo(new ApiInfo(
             "Jarvis Trading Rest App", "A Spring Rest API",
             "v1.0", null,
-            new Contact("Edward Wang", "jrvs.ca", "edward@jrvs.ca"),
+            new Contact("David Faig", "jrvs.ca", "david.faig.jrvs.ca@jrvs.ca"),
             null, null,
             new ArrayList<>()));
   }

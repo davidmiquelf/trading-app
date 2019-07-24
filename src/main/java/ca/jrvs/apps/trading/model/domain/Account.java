@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "traderId",
         "amount"
 })
-public class Account {
+public class Account implements Entity<Long>{
 
   @JsonProperty("id")
   private Long id;
