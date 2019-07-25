@@ -1,5 +1,8 @@
 package ca.jrvs.apps.trading.service;
 
+import static ca.jrvs.apps.trading.model.domain.SecurityOrder.StatusEnum;
+import static java.lang.Math.abs;
+
 import ca.jrvs.apps.trading.dao.AccountDao;
 import ca.jrvs.apps.trading.dao.PositionDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
@@ -14,9 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static ca.jrvs.apps.trading.model.domain.SecurityOrder.*;
-import static java.lang.Math.abs;
 
 
 @Service
@@ -94,8 +94,8 @@ public class OrderService {
         Position position = positionDao.getByAccountIdAndTicker(orderDto.getAccountId(), orderDto.getTicker());
         Quote quote = quoteDao.findById(orderDto.getTicker());
         Account account = accountDao.findById(orderDto.getAccountId());
-        Long absPosition = abs(position.getPosition());
-        Long absOrderSize = abs(orderDto.getSize());
+        Integer absPosition = abs(position.getPosition());
+        Integer absOrderSize = abs(orderDto.getSize());
         Long absBidSize = abs(quote.getBidSize());
 
         securityOrder.setStatus(StatusEnum.FILLED);

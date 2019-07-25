@@ -1,9 +1,9 @@
-package ca.jrvs.apps.trading.model.domain;
+package ca.jrvs.apps.trading.dao;
 
 import static org.junit.Assert.assertEquals;
 
-import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
+import ca.jrvs.apps.trading.model.domain.IexQuote;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.conn.HttpClientConnectionManager;

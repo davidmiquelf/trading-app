@@ -14,50 +14,50 @@ import javax.persistence.Enumerated;
     "price",
     "notes"
 })
-public class SecurityOrder implements Entity<Long> {
+public class SecurityOrder implements Entity<Integer> {
 
   @JsonProperty("id")
-  private Long id;
+  private Integer id;
   @JsonProperty("accountId")
-  private Long accountId;
+  private Integer accountId;
   @Enumerated(EnumType.STRING)
   @JsonProperty("status")
   private StatusEnum status;
   @JsonProperty("ticker")
   private String ticker;
   @JsonProperty("size")
-  private Long size;
+  private Integer size;
   @JsonProperty("price")
   private Double price;
   @JsonProperty("notes")
   private String notes;
 
   @JsonProperty("accountId")
-  public Long getAccountId() {
+  public Integer getAccountId() {
     return accountId;
   }
 
   @JsonProperty("accountId")
-  public void setAccountId(Long accountId) {
+  public void setAccountId(Integer accountId) {
     this.accountId = accountId;
   }
 
-  public SecurityOrder withAccountId(Long accountId) {
+  public SecurityOrder withAccountId(Integer accountId) {
     this.accountId = accountId;
     return this;
   }
 
   @JsonProperty("id")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
   @JsonProperty("id")
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public SecurityOrder withId(Long id) {
+  public SecurityOrder withId(Integer id) {
     this.id = id;
     return this;
   }
@@ -93,16 +93,16 @@ public class SecurityOrder implements Entity<Long> {
   }
 
   @JsonProperty("size")
-  public Long getSize() {
+  public Integer getSize() {
     return size;
   }
 
   @JsonProperty("size")
-  public void setSize(Long size) {
+  public void setSize(Integer size) {
     this.size = size;
   }
 
-  public SecurityOrder withSize(Long size) {
+  public SecurityOrder withSize(Integer size) {
     this.size = size;
     return this;
   }

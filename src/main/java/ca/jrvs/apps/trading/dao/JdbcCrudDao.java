@@ -19,15 +19,15 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepository<E, ID> {
 
-  private static final Logger logger = LoggerFactory.getLogger(JdbcCrudDao.class);
+  static final Logger logger = LoggerFactory.getLogger(JdbcCrudDao.class);
   private Class<E> eClass;
 
   private final String TABLE_NAME;
   private final String ID_NAME;
   boolean hasGeneratedKey = true;
   SimpleJdbcInsert simpleJdbcInsert;
-  private JdbcTemplate jdbcTemplate;
-  private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+  JdbcTemplate jdbcTemplate;
+  NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
   JdbcCrudDao(DataSource dataSource, Class<E> clazz, String tableName, String idName) {
     this.eClass = clazz;
@@ -47,7 +47,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     try {
       if (hasGeneratedKey) {
         Number id = this.simpleJdbcInsert.executeAndReturnKey(params);
-        entity.setId(id.longValue());
+        entity.setId(id.intValue());
       } else {
         this.simpleJdbcInsert.execute(params);
       }
@@ -68,7 +68,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
       entity = this.jdbcTemplate.queryForObject(
           sql, BeanPropertyRowMapper.newInstance(this.eClass), id);
     } catch (EmptyResultDataAccessException e) {
-      logger.debug("Cannot find entity in with " + ID_NAME + " = " + id, e);
+      logger.debug("Cannot find entity with " + ID_NAME + " = " + id, e);
     }
     if (entity == null) {
       throw new ResourceNotFoundException("Resource not found.");

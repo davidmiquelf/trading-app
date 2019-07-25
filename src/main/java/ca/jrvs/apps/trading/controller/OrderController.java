@@ -22,7 +22,7 @@ public class OrderController {
     }
 
     @PutMapping(path = "/marketOrder")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public void postOrder(@RequestBody MarketOrderDto marketOrderDto) {
         try {
             orderService.executeMarketOrder(marketOrderDto);

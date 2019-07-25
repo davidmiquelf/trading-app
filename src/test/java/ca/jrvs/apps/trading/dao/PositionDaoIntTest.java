@@ -25,12 +25,20 @@ public class PositionDaoIntTest {
   public void getAll() {
     List<Position> positions = positionDao.getAll();
     assertEquals(positions.size(), 2);
-    assertEquals(Long.valueOf(1), positions.get(0).getAccountId());
+    assertEquals(Integer.valueOf(1), positions.get(0).getAccountId());
+
+    positions = positionDao.getAllByTicker("C");
+    assertEquals(1, positions.size());
+    assertEquals(Integer.valueOf(1), positions.get(0).getAccountId());
+
+    positions = positionDao.getAllByAccountId(1);
+    assertEquals(1, positions.size());
+    assertEquals("C", positions.get(0).getTicker());
   }
 
   @Test
   public void getByTickerAndAccountId() {
-    Position position = positionDao.getByAccountIdAndTicker(Long.valueOf(1), "C");
-    assertEquals(Long.valueOf(1), position.getPosition());
+    Position position = positionDao.getByAccountIdAndTicker(1, "C");
+    assertEquals(Integer.valueOf(1), position.getPosition());
   }
 }

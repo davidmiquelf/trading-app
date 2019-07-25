@@ -3,7 +3,6 @@ package ca.jrvs.apps.trading.model.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,7 +14,8 @@ import java.time.LocalDate;
         "id",
         "lastName"
 })
-public class Trader implements Entity<Long>{
+@SuppressWarnings("unused")
+public class Trader implements Entity<Integer> {
 
   @JsonProperty("country")
   private String country;
@@ -26,7 +26,7 @@ public class Trader implements Entity<Long>{
   @JsonProperty("firstName")
   private String firstName;
   @JsonProperty("id")
-  private Long id;
+  private Integer id;
   @JsonProperty("lastName")
   private String lastName;
 
@@ -53,6 +53,15 @@ public class Trader implements Entity<Long>{
   @JsonProperty("dob")
   public void setDob(LocalDate dob) {
     this.dob = dob;
+  }
+
+  public void setDob(String dob) {
+    this.dob = LocalDate.parse(dob);
+  }
+
+  public Trader withDob(String dob) {
+    this.dob = LocalDate.parse(dob);
+    return this;
   }
 
   public Trader withDob(LocalDate dob) {
@@ -91,16 +100,16 @@ public class Trader implements Entity<Long>{
   }
 
   @JsonProperty("id")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
   @JsonProperty("id")
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public Trader withId(Long id) {
+  public Trader withId(Integer id) {
     this.id = id;
     return this;
   }

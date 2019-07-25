@@ -10,41 +10,41 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "traderId",
         "amount"
 })
-public class Account implements Entity<Long>{
+public class Account implements Entity<Integer> {
 
   @JsonProperty("id")
-  private Long id;
+  private Integer id;
   @JsonProperty("traderId")
-  private Long traderId;
+  private Integer traderId;
   @JsonProperty("amount")
   private Double amount;
 
   @JsonProperty("id")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
   @JsonProperty("id")
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public Account withId(Long id) {
+  public Account withId(Integer id) {
     this.id = id;
     return this;
   }
 
   @JsonProperty("traderId")
-  public Long getTraderId() {
+  public Integer getTraderId() {
     return traderId;
   }
 
   @JsonProperty("traderId")
-  public void setTraderId(Long traderId) {
+  public void setTraderId(Integer traderId) {
     this.traderId = traderId;
   }
 
-  public Account withTraderId(Long traderId) {
+  public Account withTraderId(Integer traderId) {
     this.traderId = traderId;
     return this;
   }

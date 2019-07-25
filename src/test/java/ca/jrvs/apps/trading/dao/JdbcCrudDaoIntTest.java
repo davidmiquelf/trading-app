@@ -10,7 +10,6 @@ import ca.jrvs.apps.trading.model.domain.SecurityOrder;
 import ca.jrvs.apps.trading.model.domain.SecurityOrder.StatusEnum;
 import ca.jrvs.apps.trading.model.domain.Trader;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -49,7 +48,7 @@ public class JdbcCrudDaoIntTest {
     Trader trader = new Trader();
     trader.setFirstName("Fred");
     trader.setLastName("Weasley");
-    trader.setDob(LocalDate.parse("1990-10-10", DateTimeFormatter.ISO_DATE));
+    trader.setDob("1990-10-10");
     trader.setCountry("England");
     trader.setEmail("fred.email@email.com");
 
@@ -58,7 +57,7 @@ public class JdbcCrudDaoIntTest {
 
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setPrice(1.11);
-    securityOrder.setSize(Long.valueOf(1));
+    securityOrder.setSize(1);
     securityOrder.setStatus(StatusEnum.FILLED);
     securityOrder.setTicker("AACL");
 
@@ -75,7 +74,7 @@ public class JdbcCrudDaoIntTest {
 
     securityOrder.setAccountId(account.getId());
     securityOrder = securityOrderDao.save(securityOrder);
-    assertEquals(Long.valueOf(1), securityOrder.getSize());
+    assertEquals(Integer.valueOf(1), securityOrder.getSize());
 
     assertTrue(quoteDao.existsById("AACL"));
   }
@@ -86,13 +85,13 @@ public class JdbcCrudDaoIntTest {
     Quote quote = quoteDao.findById("A");
     assertEquals((Double) 1.1, quote.getAskPrice());
 
-    Trader trader = traderDao.findById(Long.valueOf(1));
+    Trader trader = traderDao.findById(1);
     assertEquals("David", trader.getFirstName());
 
-    Account account = accountDao.findById(Long.valueOf(1));
+    Account account = accountDao.findById(1);
     assertEquals(account.getAmount(), Double.valueOf(100));
 
-    SecurityOrder securityOrder = securityOrderDao.findById(Long.valueOf(1));
+    SecurityOrder securityOrder = securityOrderDao.findById(1);
     assertEquals(StatusEnum.FILLED, securityOrder.getStatus());
 
   }
@@ -119,29 +118,29 @@ public class JdbcCrudDaoIntTest {
 
   @Test
   public void update() {
-    Trader trader = traderDao.findById(Long.valueOf(1));
+    Trader trader = traderDao.findById(1);
     trader.setFirstName("Fred");
-    trader.setDob(LocalDate.parse("1990-10-10", DateTimeFormatter.ISO_DATE));
+    trader.setDob("1990-10-10");
     trader.setEmail("fred.email@email.com");
 
     traderDao.update(trader);
-    trader = traderDao.findById(Long.valueOf(1));
+    trader = traderDao.findById(1);
 
     assertEquals("Fred", trader.getFirstName());
     assertEquals("fred.email@email.com", trader.getEmail());
     assertEquals(LocalDate.parse("1990-10-10"), trader.getDob());
 
-    Account account = accountDao.findById(Long.valueOf(1));
-    account.setAmount(Double.valueOf(10000.0));
+    Account account = accountDao.findById(1);
+    account.setAmount(10000.0);
     accountDao.update(account);
-    account = accountDao.findById(Long.valueOf(1));
+    account = accountDao.findById(1);
 
     assertEquals(Double.valueOf(10000.0), account.getAmount());
 
-    SecurityOrder securityOrder = securityOrderDao.findById(Long.valueOf(1));
+    SecurityOrder securityOrder = securityOrderDao.findById(1);
     securityOrder.setStatus(StatusEnum.CANCELED);
     securityOrderDao.update(securityOrder);
-    securityOrder = securityOrderDao.findById(Long.valueOf(1));
+    securityOrder = securityOrderDao.findById(1);
 
     assertEquals(StatusEnum.CANCELED, securityOrder.getStatus());
 
@@ -153,28 +152,32 @@ public class JdbcCrudDaoIntTest {
     String[] tickers = {"A", "B", "C", "D"};
     List<Quote> quotes = new ArrayList<>();
     for (String ticker : tickers) {
-      Quote quote = new Quote();
-      quote.setTicker(ticker);
-      quote.setAskSize((long) 123);
+      Quote quote = new Quote()
+          .withTicker(ticker)
+          .withAskSize(Long.valueOf(123))
+          .withBidSize(Long.valueOf(123))
+          .withAskPrice(123.12)
+          .withBidPrice(123.12)
+          .withLastPrice(123.12);
       quotes.add(quote);
     }
     quoteDao.updateAll(quotes);
-    assertEquals((long) 123, (long) quoteDao.findById("A").getAskSize());
-    assertEquals((long) 123, (long) quoteDao.findById("B").getAskSize());
-    assertEquals((long) 123, (long) quoteDao.findById("C").getAskSize());
+    assertEquals(Integer.valueOf(123), quoteDao.findById("A").getAskSize());
+    assertEquals(Integer.valueOf(123), quoteDao.findById("B").getAskSize());
+    assertEquals(Integer.valueOf(123), quoteDao.findById("C").getAskSize());
 
-    Long[] ids = {Long.valueOf(1), Long.valueOf(2)};
+    Integer[] ids = {1, 2};
     List<SecurityOrder> securityOrders = new ArrayList<>();
-    for (Long id : ids) {
-      SecurityOrder securityOrder = securityOrderDao.findById(Long.valueOf(id));
+    for (Integer id : ids) {
+      SecurityOrder securityOrder = securityOrderDao.findById(id);
       securityOrder.setId(id);
       securityOrder.setStatus(StatusEnum.CANCELED);
       securityOrders.add(securityOrder);
     }
 
     securityOrderDao.updateAll(securityOrders);
-    assertEquals(StatusEnum.CANCELED, securityOrderDao.findById(Long.valueOf(1)).getStatus());
-    assertEquals(StatusEnum.CANCELED, securityOrderDao.findById(Long.valueOf(2)).getStatus());
+    assertEquals(StatusEnum.CANCELED, securityOrderDao.findById(1).getStatus());
+    assertEquals(StatusEnum.CANCELED, securityOrderDao.findById(2).getStatus());
 
   }
 
@@ -187,5 +190,13 @@ public class JdbcCrudDaoIntTest {
 
   }
 
+  @Test
+  @Sql(scripts = "/test_setup.sql")
+  public void findByMethods() {
+    List<Account> accounts = accountDao.findByTraderId(1);
+    assertEquals(Double.valueOf(100.0), accounts.get(0).getAmount());
 
+    List<SecurityOrder> orders = securityOrderDao.getAllByAccountId(1);
+    assertEquals(StatusEnum.FILLED, orders.get(0).getStatus());
+  }
 }

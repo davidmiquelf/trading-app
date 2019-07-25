@@ -13,38 +13,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class MarketOrderDto {
 
     @JsonProperty("accountId")
-    private Long accountId;
+    private Integer accountId;
     @JsonProperty("size")
-    private Long size;
+    private Integer size;
     @JsonProperty("ticker")
     private String ticker;
 
     @JsonProperty("accountId")
-    public Long getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
     @JsonProperty("accountId")
-    public void setAccountId(Long accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 
-    public MarketOrderDto withAccountId(Long accountId) {
+  public MarketOrderDto withAccountId(Integer accountId) {
         this.accountId = accountId;
         return this;
     }
 
     @JsonProperty("size")
-    public Long getSize() {
+    public Integer getSize() {
         return size;
     }
 
     @JsonProperty("size")
-    public void setSize(Long size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public MarketOrderDto withSize(Long size) {
+  public MarketOrderDto withSize(Integer size) {
         this.size = size;
         return this;
     }

@@ -1,5 +1,6 @@
 package ca.jrvs.apps.trading.util;
 
+import ca.jrvs.apps.trading.model.domain.Entity;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,31 +45,40 @@ public class JsonUtil {
   /**
    * Parse JSON string to a object
    *
-   * @param json JSON str
+   * @param json  JSON str
    * @param clazz object class
-   * @param <T> Type
+   * @param <T>   Type
    * @return Object
    */
-  public static <T> T toObjectFromJson(
-      String json, Class clazz) throws IOException {
+  public static <T> T toObjectFromJson(String json, Class<T> clazz) throws IOException {
     ObjectMapper mapper = new ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    return (T) mapper.readValue(json, clazz);
+    return mapper.readValue(json, clazz);
   }
 
   public static <T> List<T> toObjectsFromJsonByField(
-      String json, String fieldName, Class clazz) throws IOException {
+      String json, String fieldName, Class<T> clazz) throws IOException {
+
     ObjectMapper mapper = new ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
     JsonNode rootNode = mapper.readTree(json);
     List<JsonNode> nodes = rootNode.findValues(fieldName);
     List<T> l = new ArrayList<>();
     for (JsonNode node : nodes) {
-      l.add((T) mapper.readValue(node.toString(), clazz));
+      l.add(mapper.readValue(node.toString(), clazz));
     }
     return l;
+  }
+
+  public static <E extends Entity> void validateEntity(Class<E> clazz, E entity, String keyName)
+      throws IllegalAccessException {
+    for (Field f : clazz.getDeclaredFields()) {
+      f.setAccessible(true);
+      if (f.get(entity) == null && f.getName() != keyName) {
+        throw new IllegalArgumentException("Field not filled: " + f.getName());
+      }
+    }
   }
 
 }

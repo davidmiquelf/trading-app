@@ -13,38 +13,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Position {
 
   @JsonProperty("accountId")
-  private Long accountId;
+  private Integer accountId;
   @JsonProperty("position")
-  private Long position;
+  private Integer position;
   @JsonProperty("ticker")
   private String ticker;
 
   @JsonProperty("accountId")
-  public Long getAccountId() {
+  public Integer getAccountId() {
     return accountId;
   }
 
   @JsonProperty("accountId")
-  public void setAccountId(Long accountId) {
+  public void setAccountId(Integer accountId) {
     this.accountId = accountId;
   }
 
-  public Position withAccountId(Long accountId) {
+  public Position withAccountId(Integer accountId) {
     this.accountId = accountId;
     return this;
   }
 
   @JsonProperty("position")
-  public Long getPosition() {
+  public Integer getPosition() {
     return position;
   }
 
   @JsonProperty("position")
-  public void setPosition(Long position) {
+  public void setPosition(Integer position) {
     this.position = position;
   }
 
-  public Position withPosition(Long position) {
+  public Position withPosition(Integer position) {
     this.position = position;
     return this;
   }
