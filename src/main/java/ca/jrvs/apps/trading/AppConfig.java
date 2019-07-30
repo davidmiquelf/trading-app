@@ -35,9 +35,9 @@ public class AppConfig {
   @Bean
   public DataSource dataSource() {
     BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUrl("jdbc:postgresql://localhost:5432/jrvstrading");
-    dataSource.setUsername("postgres");
-    dataSource.setPassword("password");
+    dataSource.setUrl(System.getenv("PSQL_URL"));
+    dataSource.setUsername(System.getenv("PSQL_USER"));
+    dataSource.setPassword(System.getenv("PSQL_PASSWORD"));
     return dataSource;
   }
 
