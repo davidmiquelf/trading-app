@@ -17,3 +17,5 @@ docker run --rm --name jrvs-psql \
 -e POSTGRES_USER=postgres \
 --network trading-net \
 -d -p 5432:5432 jrvs-psql
+
+cd ../dll
