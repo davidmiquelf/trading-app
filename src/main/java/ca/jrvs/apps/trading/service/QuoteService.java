@@ -63,7 +63,12 @@ public class QuoteService {
   }
 
   public void initQuote(String ticker) {
-    Quote quote = new Quote();
+    Quote quote = new Quote()
+        .withAskPrice(Double.valueOf(0))
+        .withAskSize(Long.valueOf(0))
+        .withBidPrice(Double.valueOf(0))
+        .withBidSize(Long.valueOf(0))
+        .withLastPrice(Double.valueOf(0));
     quote.setTicker(ticker);
     System.out.println("Trying to insert " + ticker + " to quotes.");
     try {
