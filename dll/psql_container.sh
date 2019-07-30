@@ -1,10 +1,10 @@
 #!bin/bash
 
 
-docker ps -a | awk '{ print $1,$2 }' | grep postgres \
+docker ps -a | awk '{ print $1,$2 }' | grep jrvs-psql \
 | awk '{print $1 }' | xargs -I {} docker container stop {}
 
-docker ps -a | awk '{ print $1,$2 }' | grep postgres \
+docker ps -a | awk '{ print $1,$2 }' | grep jrvs-psql \
 | awk '{print $1 }' | xargs -I {} docker container rm {}
 
 cd ../psql
