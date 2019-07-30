@@ -37,8 +37,9 @@ public class PositionDaoIntTest {
   }
 
   @Test
+  @Sql(scripts = "/test_setup.sql")
   public void getByTickerAndAccountId() {
     Position position = positionDao.getByAccountIdAndTicker(1, "C");
-    assertEquals(Integer.valueOf(1), position.getPosition());
+    assertEquals(Long.valueOf(1), position.getPosition());
   }
 }

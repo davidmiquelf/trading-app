@@ -94,8 +94,8 @@ public class OrderService {
         Position position = positionDao.getByAccountIdAndTicker(orderDto.getAccountId(), orderDto.getTicker());
         Quote quote = quoteDao.findById(orderDto.getTicker());
         Account account = accountDao.findById(orderDto.getAccountId());
-        Integer absPosition = abs(position.getPosition());
-        Integer absOrderSize = abs(orderDto.getSize());
+      Long absPosition = abs(position.getPosition());
+      Long absOrderSize = abs(orderDto.getSize());
         Long absBidSize = abs(quote.getBidSize());
 
         securityOrder.setStatus(StatusEnum.FILLED);

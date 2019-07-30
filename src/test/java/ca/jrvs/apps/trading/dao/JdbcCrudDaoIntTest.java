@@ -57,7 +57,7 @@ public class JdbcCrudDaoIntTest {
 
     SecurityOrder securityOrder = new SecurityOrder();
     securityOrder.setPrice(1.11);
-    securityOrder.setSize(1);
+    securityOrder.setSize(Long.valueOf(1));
     securityOrder.setStatus(StatusEnum.FILLED);
     securityOrder.setTicker("AACL");
 
@@ -74,7 +74,7 @@ public class JdbcCrudDaoIntTest {
 
     securityOrder.setAccountId(account.getId());
     securityOrder = securityOrderDao.save(securityOrder);
-    assertEquals(Integer.valueOf(1), securityOrder.getSize());
+    assertEquals(Long.valueOf(1), securityOrder.getSize());
 
     assertTrue(quoteDao.existsById("AACL"));
   }
@@ -162,9 +162,9 @@ public class JdbcCrudDaoIntTest {
       quotes.add(quote);
     }
     quoteDao.updateAll(quotes);
-    assertEquals(Integer.valueOf(123), quoteDao.findById("A").getAskSize());
-    assertEquals(Integer.valueOf(123), quoteDao.findById("B").getAskSize());
-    assertEquals(Integer.valueOf(123), quoteDao.findById("C").getAskSize());
+    assertEquals(Long.valueOf(123), quoteDao.findById("A").getAskSize());
+    assertEquals(Long.valueOf(123), quoteDao.findById("B").getAskSize());
+    assertEquals(Long.valueOf(123), quoteDao.findById("C").getAskSize());
 
     Integer[] ids = {1, 2};
     List<SecurityOrder> securityOrders = new ArrayList<>();

@@ -15,7 +15,7 @@ public class MarketOrderDto {
     @JsonProperty("accountId")
     private Integer accountId;
     @JsonProperty("size")
-    private Integer size;
+    private Long size;
     @JsonProperty("ticker")
     private String ticker;
 
@@ -35,16 +35,16 @@ public class MarketOrderDto {
     }
 
     @JsonProperty("size")
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
 
     @JsonProperty("size")
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 
-  public MarketOrderDto withSize(Integer size) {
+  public MarketOrderDto withSize(Long size) {
         this.size = size;
         return this;
     }

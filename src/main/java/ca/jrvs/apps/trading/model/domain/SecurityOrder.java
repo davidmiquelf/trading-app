@@ -26,7 +26,7 @@ public class SecurityOrder implements Entity<Integer> {
   @JsonProperty("ticker")
   private String ticker;
   @JsonProperty("size")
-  private Integer size;
+  private Long size;
   @JsonProperty("price")
   private Double price;
   @JsonProperty("notes")
@@ -93,16 +93,16 @@ public class SecurityOrder implements Entity<Integer> {
   }
 
   @JsonProperty("size")
-  public Integer getSize() {
+  public Long getSize() {
     return size;
   }
 
   @JsonProperty("size")
-  public void setSize(Integer size) {
+  public void setSize(Long size) {
     this.size = size;
   }
 
-  public SecurityOrder withSize(Integer size) {
+  public SecurityOrder withSize(Long size) {
     this.size = size;
     return this;
   }
