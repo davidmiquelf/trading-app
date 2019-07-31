@@ -14,7 +14,7 @@ docker build -t jrvs-psql .
 docker run --name jrvs-psql \
 --restart unless-stopped \
 -e "PSQL_URL=jdbc:postgresql://trading-app-david.cqjlilomcylr.us-east-1.rds.amazonaws.com:5432/jrvstrading" \
--e POSTGRES_PASSWORD=password \
+-e POSTGRES_PASSWORD=davidpassword \
 -e POSTGRES_DB=jrvstrading \
 -e POSTGRES_USER=postgres \
 --network trading-net \
