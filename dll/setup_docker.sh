@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo systemctl enable docker
+git pull
 
 source ./network_bridge.sh
 
