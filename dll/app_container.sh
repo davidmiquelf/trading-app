@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git pull
+
 cd ..
 
 docker ps -a | awk '{ print $1,$2 }' | grep trading-app \
