@@ -13,6 +13,7 @@ docker network disconnect trading-net trading-app
 docker build -t trading-app .
 
 docker run \
+--restart unless-stopped \
 -e "PSQL_URL=jdbc:postgresql://jrvs-psql:5432/jrvstrading" \
 -e "PSQL_USER=postgres" \
 -e "PSQL_PASSWORD=password" \
