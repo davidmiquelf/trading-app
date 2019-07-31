@@ -16,7 +16,7 @@ docker run \
 --restart unless-stopped \
 -e "PSQL_URL=jdbc:postgresql://trading-app-david.cqjlilomcylr.us-east-1.rds.amazonaws.com:5432/jrvstrading" \
 -e "PSQL_USER=postgres" \
--e "PSQL_PASSWORD=password" \
+-e "PSQL_PASSWORD=davidpassword" \
 -e "IEX_PUB_TOKEN=$IEX_PUB_TOKEN" \
 --name trading-app \
 --network trading-net \
