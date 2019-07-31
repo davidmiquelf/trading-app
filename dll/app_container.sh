@@ -25,3 +25,5 @@ docker run -d \
 -p 8080:8080 -t trading-app
 
 cd ./dll
+
+docker logs -f trading-app
