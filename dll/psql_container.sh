@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 
 docker ps -a | awk '{ print $1,$2 }' | grep jrvs-psql \
