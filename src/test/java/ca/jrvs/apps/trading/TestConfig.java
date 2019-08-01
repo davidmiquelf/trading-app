@@ -19,7 +19,7 @@ public class TestConfig {
   @Bean
   public MarketDataConfig marketDataConfig() {
     MarketDataConfig marketDataConfig = new MarketDataConfig();
-    marketDataConfig.setToken("pk_f0966987a4e34207821ed24dbfdf9bb2");
+    marketDataConfig.setToken(System.getenv("IEX_PUB_TOKEN"));
     marketDataConfig.setHost(iex_host);
     return marketDataConfig;
   }
