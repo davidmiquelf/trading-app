@@ -2,16 +2,26 @@
 An online stock trading simlation REST API, built with a microservices architecture. Can be used to track accounts/positions/quotes and submit security orders. Could be connected to a front end stock trading website.
 It's a MicroService implemented with SpringBoot. Uses a PSQL database, and accesses IEX market data through IEX API. Has Dockerfiles and scripts for setting up and deploying docker containers.
 
-# Quick Start (Docker)
-Prequiresites: Java, Docker, CentOS 7  
-Start docker, navigate to the project folder, then run the docker setup script.
+# Quick Start
+## With Docker
+ - Prequiresites: Java, Docker, CentOS 7  
+ - Setup the proper environment variables. Edit `~/.bashrc` file to have them set up in every shell.
+```$xslt
+export IEX_PUB_TOKEN=<your-token>
+export PSQL_USER=postgres
+export PSQL_PASSWORD=password
+export PSQL_URL="jdbc:postgresql://jrvs-psql:5432/jrvstrading"
+```
+ - Start docker, navigate to the project folder, then run the docker setup script.
 ```$xslt
 $ systemctl start docker
 $ cd dll
-$ bash setup_docker_local.sh
+$ bash setup_docker.sh
 ```
-- How to consume REST API? (Swagger screenshot and postman with OpenAPI Specification, e.g. http://35.231.122.184:5000/v2/api-docs
-
+ - To interact with the app, open a web browser and connect to 
+ `http://localhost:8080/swagger-ui.html#/`
+## Without docker
+ - Run a local version of
 # REST API Usage
 ## Swagger
 What's swagger (1-2 sentences, you can copy from swagger docs). Why are we using it or who will benefit from it?
