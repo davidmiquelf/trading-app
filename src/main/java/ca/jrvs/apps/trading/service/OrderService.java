@@ -85,9 +85,10 @@ public class OrderService {
         } else if (orderDto.getSize() > quote.getAskSize()){
             securityOrder.setNotes("Order size too large.");
             securityOrder.setStatus(StatusEnum.CANCELED);
+        } else {
+          account.setAmount(account.getAmount() - totalPrice);
+          accountDao.save(account);
         }
-        account.setAmount(account.getAmount() - totalPrice);
-        accountDao.save(account);
     }
 
     private void executeSellOrder(SecurityOrder securityOrder, MarketOrderDto orderDto) {
@@ -105,8 +106,9 @@ public class OrderService {
         } else if (absBidSize < absOrderSize){
             securityOrder.setNotes("Order size too large.");
             securityOrder.setStatus(StatusEnum.CANCELED);
+        } else {
+          account.setAmount(account.getAmount() - absOrderSize * quote.getBidPrice());
+          accountDao.save(account);
         }
-        account.setAmount(account.getAmount() - absOrderSize * quote.getBidPrice());
-        accountDao.save(account);
     }
 }

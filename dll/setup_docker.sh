@@ -2,6 +2,6 @@
 
 git pull
 
-source ./network_bridge.sh
+source ./build_network_bridge.sh
 
-source ./app_container.sh
+source ./run_docker_app.sh

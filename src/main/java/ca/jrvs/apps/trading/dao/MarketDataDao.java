@@ -6,7 +6,6 @@ import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -39,7 +38,7 @@ public class MarketDataDao {
   }
 
   public List<IexQuote> findIexQuoteByTickers(List<String> tickers) {
-    String tickersString = tickers.stream().collect(Collectors.joining(","));
+    String tickersString = String.join(",", tickers);
     String url = String.format(HOST + BATCH_QUOTE_URL, tickersString, TOKEN);
     String json = executeHttpGet(url);
     List<IexQuote> quotes = null;
