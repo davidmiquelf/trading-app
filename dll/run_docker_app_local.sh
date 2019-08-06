@@ -14,8 +14,8 @@ docker build -t trading-app .
 
 docker run -d \
 --restart unless-stopped \
--e "PSQL_URL=jdbc:postgresql://localhost:5432/jrvstrading" \
--e "PSQL_USER=postgres" \
+-e "PSQL_URL=$PSQL_URL" \
+-e "PSQL_USER=$PSQL_USER" \
 -e "PSQL_PASSWORD=$PSQL_PASS" \
 -e "IEX_PUB_TOKEN=$IEX_PUB_TOKEN" \
 --name trading-app \
