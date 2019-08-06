@@ -1,3 +1,15 @@
+- [Introduction](#introduction)
+- [Quick Start](#quick-start)
+  * [With Docker](#with-docker)
+  * [Without docker](#without-docker)
+- [REST API Usage](#rest-api-usage)
+  * [Swagger](#swagger)
+  * [Quote Controller](#quote-controller)
+  * [Trader Controller](#trader-controller)
+  * [App controller](#app-controller)
+- [Architecture](#architecture)
+- [Improvements](#improvements)
+
 # Introduction
 An online stock trading simlation REST API, built with a microservices architecture. Can be used to track accounts/positions/quotes and submit security orders. Could be connected to a front end stock trading website.
 It's a MicroService implemented with SpringBoot. Uses a PSQL database, and accesses IEX market data through IEX API. Has Dockerfiles and scripts for setting up and deploying docker containers.
