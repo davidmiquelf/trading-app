@@ -18,7 +18,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ca.jrvs.apps.trading.TestConfig.class,
     loader = AnnotationConfigContextLoader.class)
-public class QuoteServiceTest {
+public class QuoteServiceIntegrationTest {
 
   @Autowired
   private QuoteDao quoteDao;

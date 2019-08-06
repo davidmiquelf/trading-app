@@ -2,6 +2,6 @@
 
 git pull
 
-source ./network_bridge.sh
+docker network create --driver bridge trading-net
 
-source ./app_container.sh
+source ./run_docker_app.sh

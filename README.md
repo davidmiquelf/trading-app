@@ -1,13 +1,15 @@
 # Introduction
-- Briefly explain what does this project do (e.g. it an online stock trading simulation REST API which can blah..blah) and who can use this API (e.g. front-end developer, mobile developer, and traders can utilize this REST API)
-- Briefly talk about technologies used in this project(e.g. It's a MicroService which is implemented with SpringBoot. PSQL database. IEX market data)
+An online stock trading simlation REST API, built with a microservices architecture. Can be used to track accounts/positions/quotes and submit security orders. Could be connected to a front end stock trading website.
+It's a MicroService implemented with SpringBoot. Uses a PSQL database, and accesses IEX market data through IEX API. Has Dockerfiles and scripts for setting up and deploying docker containers.
 
-# Quick Start
-- Prequiresites: Java, Docker, CentOS 7
-- PSQL init
-- git clone and mvn build
-- Start Springboot app using a shell script
-  - describe env vars
+# Quick Start (Docker)
+Prequiresites: Java, Docker, CentOS 7  
+Start docker, navigate to the project folder, then run the docker setup script.
+```$xslt
+$ systemctl start docker
+$ cd dll
+$ bash setup_docker_local.sh
+```
 - How to consume REST API? (Swagger screenshot and postman with OpenAPI Specification, e.g. http://35.231.122.184:5000/v2/api-docs
 
 # REST API Usage
