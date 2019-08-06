@@ -16,7 +16,7 @@ docker run -d \
 --restart unless-stopped \
 -e "PSQL_URL=$PSQL_URL" \
 -e "PSQL_USER=$PSQL_USER" \
--e "PSQL_PASSWORD=$PSQL_PASS" \
+-e "PSQL_PASSWORD=$PSQL_PASSWORD" \
 -e "IEX_PUB_TOKEN=$IEX_PUB_TOKEN" \
 --name trading-app \
 --network trading-net \
