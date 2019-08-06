@@ -87,7 +87,7 @@ public class OrderService {
             securityOrder.setStatus(StatusEnum.CANCELED);
         } else {
           account.setAmount(account.getAmount() - totalPrice);
-          accountDao.save(account);
+          accountDao.update(account);
         }
     }
 
@@ -108,7 +108,7 @@ public class OrderService {
             securityOrder.setStatus(StatusEnum.CANCELED);
         } else {
           account.setAmount(account.getAmount() - absOrderSize * quote.getBidPrice());
-          accountDao.save(account);
+          accountDao.update(account);
         }
     }
 }

@@ -10,6 +10,7 @@ import ca.jrvs.apps.trading.model.domain.SecurityOrder;
 import ca.jrvs.apps.trading.model.domain.Trader;
 import ca.jrvs.apps.trading.model.view.TraderAccountView;
 import ca.jrvs.apps.trading.util.JsonUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,8 +109,14 @@ public class RegisterService {
     traderDao.deleteById(traderId);
   }
 
-  public List<Account> viewAccounts(Integer traderId) {
-    return accountDao.findByTraderId(traderId);
+  public List<TraderAccountView> viewAccounts(Integer traderId) {
+    List<Account> accounts = accountDao.findByTraderId(traderId);
+    List<TraderAccountView> views = new ArrayList<>();
+    Trader trader = traderDao.findById(traderId);
+    for (Account account : accounts) {
+      views.add(new TraderAccountView().withAccount(account).withTrader(trader));
+    }
+    return views;
   }
 
 }

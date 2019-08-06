@@ -102,7 +102,7 @@ public class TraderController {
   @GetMapping(path = "/traderId/{traderId}")
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
-  public List<Account> viewAccount(@PathVariable String traderId) {
+  public List<TraderAccountView> viewAccount(@PathVariable String traderId) {
     try {
       return registerService.viewAccounts(Integer.parseInt(traderId));
     } catch (Exception e) {
