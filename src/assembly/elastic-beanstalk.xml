@@ -2,17 +2,17 @@
   <fileSets>
     <fileSet>
       <directory>target</directory>
+      <outputDirectory>/</outputDirectory>
       <includes>
         <include>trading-1.0-SNAPSHOT.jar</include>
       </includes>
-      <outputDirectory>/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>psql/sql_ddl</directory>
+      <directory>psql/sql_dll</directory>
+      <outputDirectory>/sql</outputDirectory>
       <includes>
         <include>*.sql</include>
       </includes>
-      <outputDirectory>/sql</outputDirectory>
     </fileSet>
   </fileSets>
   <formats>
