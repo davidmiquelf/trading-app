@@ -27,7 +27,7 @@ pipeline {
             when { branch 'master' }
             steps {
                 echo "Current Branch is: ${env.GIT_BRANCH}"
-                sh "./eb/eb_deploy.sh tradingApp jrvstrading-dev"
+                sh "bash ./eb/eb_deploy.sh tradingApp jrvstrading-dev"
             }
         }
     }
