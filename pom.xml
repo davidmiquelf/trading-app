@@ -72,7 +72,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptors>src/assembly/bootstrap-ec2.xml</descriptors>
-          <finalName>trading-${pom.version}</finalName>
+          <finalName>trading-${project.version}</finalName>
         </configuration>
         <executions>
           <execution>
