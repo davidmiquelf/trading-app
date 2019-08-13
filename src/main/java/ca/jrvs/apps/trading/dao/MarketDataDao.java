@@ -4,7 +4,6 @@ import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,6 +12,8 @@ import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MarketDataDao {
 
+  static final Logger logger = LoggerFactory.getLogger(MarketDataDao.class);
   private HttpClientConnectionManager hccm;
   private final String HOST;
   private final String BATCH_QUOTE_URL = "stable/stock/market/batch"
@@ -45,8 +47,10 @@ public class MarketDataDao {
     List<IexQuote> quotes = null;
     try {
       quotes = JsonUtil.toObjectsFromJsonByField(json, "quote", IexQuote.class);
+    } catch (DataRetrievalFailureException e) {
+      logger.debug("No data found.");
     } catch (IOException e) {
-      quotes = new ArrayList<>();
+      throw new RuntimeException(e);
     }
     return quotes;
   }
@@ -57,8 +61,11 @@ public class MarketDataDao {
     IexQuote quote;
     try {
       quote = JsonUtil.toObjectFromJson(json, IexQuote.class);
+    } catch (DataRetrievalFailureException e) {
+      quote = null;
+      logger.debug("No data found.");
     } catch (IOException e) {
-      quote = new IexQuote();
+      throw new RuntimeException(e);
     }
     return quote;
   }
