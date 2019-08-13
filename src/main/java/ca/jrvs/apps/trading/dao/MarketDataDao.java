@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -42,7 +43,7 @@ public class MarketDataDao {
 
   public List<IexQuote> findIexQuoteByTickers(List<String> tickers) {
     if (tickers == null || tickers.isEmpty()) {
-      return null;
+      return new ArrayList<>();
     }
     String tickersString = String.join(",", tickers);
     String url = String.format(HOST + BATCH_QUOTE_URL, tickersString, TOKEN);
@@ -60,7 +61,7 @@ public class MarketDataDao {
 
   public IexQuote findIexQuoteByTicker(String ticker) {
     if (ticker == null) {
-      return null;
+      return new IexQuote();
     }
     String url = String.format(HOST + SINGLE_QUOTE_URL, ticker, TOKEN);
     String json = executeHttpGet(url);
