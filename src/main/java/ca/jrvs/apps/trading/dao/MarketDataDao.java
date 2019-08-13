@@ -41,6 +41,9 @@ public class MarketDataDao {
   }
 
   public List<IexQuote> findIexQuoteByTickers(List<String> tickers) {
+    if (tickers == null || tickers.isEmpty()) {
+      return null;
+    }
     String tickersString = String.join(",", tickers);
     String url = String.format(HOST + BATCH_QUOTE_URL, tickersString, TOKEN);
     String json = executeHttpGet(url);
@@ -56,6 +59,9 @@ public class MarketDataDao {
   }
 
   public IexQuote findIexQuoteByTicker(String ticker) {
+    if (ticker == null) {
+      return null;
+    }
     String url = String.format(HOST + SINGLE_QUOTE_URL, ticker, TOKEN);
     String json = executeHttpGet(url);
     IexQuote quote;
