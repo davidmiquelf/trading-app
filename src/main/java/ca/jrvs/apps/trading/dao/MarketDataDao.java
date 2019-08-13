@@ -69,7 +69,7 @@ public class MarketDataDao {
     try {
       quote = JsonUtil.toObjectFromJson(json, IexQuote.class);
     } catch (DataRetrievalFailureException e) {
-      quote = null;
+      quote = new IexQuote();
       logger.debug("No data found.");
     } catch (IOException e) {
       throw new RuntimeException(e);
