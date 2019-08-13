@@ -4,6 +4,7 @@ import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import ca.jrvs.apps.trading.model.domain.IexQuote;
 import ca.jrvs.apps.trading.util.JsonUtil;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -45,7 +46,7 @@ public class MarketDataDao {
     try {
       quotes = JsonUtil.toObjectsFromJsonByField(json, "quote", IexQuote.class);
     } catch (IOException e) {
-      e.printStackTrace();
+      quotes = new ArrayList<>();
     }
     return quotes;
   }
@@ -57,7 +58,7 @@ public class MarketDataDao {
     try {
       quote = JsonUtil.toObjectFromJson(json, IexQuote.class);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      quote = new IexQuote();
     }
     return quote;
   }
